@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Deteksi ABI Android</title>
+  <script>
+    function detectAbiAndroidOnly() {
+      const ua = navigator.userAgent.toLowerCase();
+      const platform = navigator.platform.toLowerCase();
+
+      // Cek apakah user-agent mengandung 'android'
+      if (!ua.includes("android")) {
+        // Jika bukan Android, kosongkan hasil dan hentikan
+        document.body.innerHTML = "<p style='color:gray'>Perangkat ini bukan Android.</p>";
+        return;
+      }
+
+      let abi = "Tidak diketahui";
+
+      if (platform.includes("aarch64") || ua.includes("arm64") || ua.includes("aarch64")) {
+        abi = "arm64-v8a (ARM 64-bit)";
+      } else if (ua.includes("armeabi") || ua.includes("armv7") || platform.includes("arm")) {
+        abi = "armeabi-v7a (ARM 32-bit)";
+      } else if (ua.includes("x86_64")) {
+        abi = "x86_64 (Intel 64-bit)";
+      } else if (ua.includes("x86")) {
+        abi = "x86 (Intel 32-bit)";
+      } else if (ua.includes("mips64")) {
+        abi = "mips64 (MIPS 64-bit)";
+      } else if (ua.includes("mips")) {
+        abi = "mips (MIPS 32-bit)";
+      }
+
+      // Tampilkan hasil hanya jika Android
+      document.getElementById("abi").innerText = "Perkiraan ABI: " + abi;
+      document.getElementById("platform").innerText = "Platform: " + navigator.platform;
+      document.getElementById("ua").innerText = "User Agent: " + navigator.userAgent;
+    }
+  </script>
+</head>
+<body onload="detectAbiAndroidOnly()">
+  <h2>Deteksi ABI Perangkat Android</h2>
+  <p id="abi">Memuat...</p>
+  <p id="platform"></p>
+  <p id="ua" style="font-size: 12px; color: gray;"></p>
+</body>
+</html>
